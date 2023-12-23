@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 from PIL import Image
 
@@ -103,26 +102,17 @@ def main():
     # Absorbance vs. Wavelength graph
     st.subheader("Absorbance vs. Wavelength Graph:")
     if 'Wavelength' in data_lambda_max.columns and 'Absorbance' in data_lambda_max.columns:
-        plt.figure(figsize=(8, 6))
-        plt.plot(data_lambda_max['Wavelength'], data_lambda_max['Absorbance'], marker='o', linestyle='-', color='b')
-        plt.title("Absorbance vs. Wavelength")
-        plt.xlabel("Wavelength (nm)")
-        plt.ylabel("Absorbance (O.D)")
-        st.pyplot(plt)
+        st.line_chart(data_lambda_max.set_index('Wavelength'))
     else:
         st.warning("Insufficient data for plotting. Please provide data for λmax determination.")
 
     # Absorbance vs. Concentration graph
     st.subheader("Absorbance vs. Concentration Graph:")
     if 'Concentration' in data_concentration.columns and 'Absorbance' in data_concentration.columns:
-        plt.figure(figsize=(8, 6))
-        plt.plot(data_concentration['Concentration'], data_concentration['Absorbance'], marker='o', linestyle='-', color='r')
-        plt.title("Absorbance vs. Concentration")
-        plt.xlabel("Concentration [in MOLAR]")
-        plt.ylabel("Absorbance (O.D)")
-        st.pyplot(plt)
+        st.line_chart(data_concentration.set_index('Concentration'))
     else:
         st.warning("Insufficient data for plotting. Please provide data for A and %T determination.")
 
 if __name__ == "__main__":
     main()
+
